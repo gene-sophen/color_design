@@ -1,0 +1,88 @@
+/* ============================================================
+   Aurora Glass · design tokens
+   用法：在全局样式最前注入本文件（或在 <style> / CSS 入口处 @import），
+   之后组件样式统一引用 var(--token)，不要硬编码色值。
+   覆盖：后台/admin 作用域可将 --sky 改为 #87c4ed、
+   --grad-mq 改为 linear-gradient(135deg, #87c4ed, #5ad7f2)。
+   数值摘自项目 src/styles/global.css。
+   ============================================================ */
+
+:root {
+  /* 品牌色：极光淡彩 */
+  --sky: #7ab9f0;
+  --cyan: #5ad7f2;
+  --mint: #70f4bf;   /* 仅表「当前/活跃」状态 */
+  --blue: #3f8fef;
+
+  /* 墨色文字层级 */
+  --ink: #0f172a;
+  --body: #334155;
+  --muted: #64748b;
+
+  --bg: #f8fbff;
+
+  /* 玻璃：卡片层 */
+  --glass-bg: rgba(255, 255, 255, .65);
+  --glass-border: rgba(255, 255, 255, .72);
+
+  /* 项目渐变：仅小面积点缀（圆点/进度条/节点/下划线/图标块/按钮），禁大面积铺底 */
+  --grad-pulse:   linear-gradient(135deg, #5ad7f2, #70f4bf);
+  --grad-mq:      linear-gradient(135deg, #7ab9f0, #3f8fef);
+  --grad-avalon:  linear-gradient(135deg, #70f4bf, #3f8fef);
+  --grad-misc:    linear-gradient(135deg, #87c4ed, #70f4bf);
+  --grad-neutral: linear-gradient(135deg, #cbd5e1, #94a3b8);
+
+  /* 阴影：中性墨色三档，禁用彩色阴影 */
+  --shadow-sm: 0 4px 16px rgba(15, 23, 42, .05);
+  --shadow-md: 0 12px 40px rgba(15, 23, 42, .07);
+  --shadow-lg: 0 20px 56px rgba(15, 23, 42, .12);
+
+  --r-pill: 999px;
+  --r-md: 14px;
+  --r-lg: 20px;
+
+  /* 动效：全站唯一一组参数（详见 aurora-motion skill） */
+  --t-press: 120ms;
+  --t-hover: 200ms;
+  --t-reveal: 600ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-display: "Space Grotesk", "Noto Sans SC", sans-serif;
+  --font-body: "Noto Sans SC", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --container: 1080px;
+}
+
+/* 全局焦点环与选中色 */
+:focus-visible {
+  outline: 2px solid #2b6cb0;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection { background: rgba(90, 215, 242, .35); }
+
+/* 极淡彩色过渡带：大面积区块唯一合法的渐变用法（alpha ≤ .06） */
+.tint-a { background: linear-gradient(180deg, rgba(90, 215, 242, .06), rgba(112, 244, 191, .035)); }
+.tint-b { background: linear-gradient(180deg, rgba(122, 185, 240, .06), rgba(90, 215, 242, .035)); }
+
+/* 主题类：只提供渐变变量 --pgrad 给小面积点缀消费，不刷大面积底色 */
+.theme-pulse   { --pgrad: var(--grad-pulse); }
+.theme-mq      { --pgrad: var(--grad-mq); }
+.theme-avalon  { --pgrad: var(--grad-avalon); }
+.theme-neutral { --pgrad: var(--grad-neutral); }
+.theme-misc    { --pgrad: var(--grad-misc); }
+
+/* 进度条：浅墨轨道 + 项目渐变填充（.pfill 宽度由外部按百分比设置） */
+.ptrack {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(15, 23, 42, .06);
+  overflow: hidden;
+}
+.pfill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--pgrad, var(--grad-pulse));
+}

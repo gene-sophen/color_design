@@ -1,0 +1,55 @@
+/* ============================================================
+   Aurora Glass — 极光背景层（可注入）
+   用法：
+   1. 在 <body> 内最前放入 SVG（结构见下，与 src/components/Aurora.astro 相同）
+   2. 引入本文件（或并入全局 CSS）
+   3. 依赖全局 token：--ease: cubic-bezier(0.22, 1, 0.36, 1)；--bg: #f8fbff
+      若无该 token，请先定义（配色见 aurora-color skill）
+
+   SVG 结构（S 形双光带，高斯模糊，viewBox 随页面高度拉伸）：
+   <svg class="aurora" aria-hidden="true" viewBox="0 0 1200 3200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+     <defs>
+       <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+         <stop offset="0" stop-color="#5ad7f2"></stop>
+         <stop offset=".5" stop-color="#3f8fef"></stop>
+         <stop offset="1" stop-color="#70f4bf"></stop>
+       </linearGradient>
+       <filter id="band-blur" x="-50%" y="-50%" width="200%" height="200%">
+         <feGaussianBlur stdDeviation="80"></feGaussianBlur>
+       </filter>
+     </defs>
+     <g filter="url(#band-blur)">
+       <path d="M950 -150 C250 350 1050 700 350 1150 C-100 1500 1000 1900 500 2300 C100 2600 900 2900 300 3350" fill="none" stroke="url(#band)" stroke-width="360" opacity=".13"></path>
+       <path d="M250 -150 C1000 450 100 900 850 1350 C1150 1700 200 2100 800 2550 C1100 2800 400 3100 850 3350" fill="none" stroke="url(#band)" stroke-width="280" opacity=".08"></path>
+     </g>
+   </svg>
+   ============================================================ */
+
+/* body 背景约定：底色在 html 上，body 透明 + relative 承载 .aurora；
+   overflow-x: clip 防止光带溢出产生横向滚动条 */
+html { background: var(--bg); }
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: transparent;
+}
+
+/* S 形流光带：absolute 铺满全文档高度，60s 极缓漂移 */
+.aurora {
+  position: absolute;
+  top: -4%; left: -3%;
+  width: 106%; height: 108%;
+  z-index: -1;
+  pointer-events: none;
+  animation: aurora-sway 60s var(--ease) infinite alternate;
+}
+@keyframes aurora-sway {
+  from { transform: translate3d(-1.5%, -1%, 0); }
+  to   { transform: translate3d(1.5%, 1%, 0); }
+}
+
+/* reduced-motion 降级：光带静止（若全局 CSS 已有降级块，可省略本段） */
+@media (prefers-reduced-motion: reduce) {
+  .aurora { animation: none; }
+}

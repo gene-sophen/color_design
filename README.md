@@ -66,3 +66,17 @@ codepulse-design-system/
 - "把现有组件配色迁移到这套设计系统的 CSS 变量上"
 
 也可以手动引用：`@codepulse-design-system/assets/design-tokens.css` 作为项目样式基座。
+
+## Aurora Glass 设计系统（四件套）
+
+提炼自个人博客 gene-blog（极光背景 × 玻璃拟态 × 淡彩标签 × 错落编辑栅格），拆分为四个可独立触发、互相引用的子技能：
+
+    aurora-glass/
+    ├── aurora-color/        # 色彩系统：色板、淡彩配方、渐变红线、design-tokens.css
+    ├── aurora-layout/       # 界面布局：页面骨架、栅格模式、sticky 侧栏、响应式降级
+    ├── aurora-components/   # 组件规范：玻璃卡片、标签徽章、表单、导航、图表容器
+    └── aurora-motion/       # 动效规范：120/200/600ms 参数组、滚动入场、极光背景
+
+与 CodePulse 风格的区别：本套用中性墨色阴影（非彩色阴影）、渐变仅小面积点缀、薄荷绿仅表「当前/活跃」状态。
+
+安装：把需要的子目录复制到 Agent skills 目录（如 `~/.agents/skills/`）即可，支持 Claude Code / Kimi Code 等兼容 SKILL.md 规范的 Agent。
